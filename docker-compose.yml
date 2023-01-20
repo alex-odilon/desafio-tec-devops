@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+
+##SESSÃO DEDICADA AO WORDPRESS##
+    wordpress:
+        container_name: wordpress
+        image: wordpress
+        restart: always
+        stdin_open: true
+        tty: true
+        env_file:
+            - .env
+        volumes:
+            - wordpress_data:/var/www/html
+        depends_on:
+          - nginx
+
+##SESSÃO DEDICADA AO BANCO DE DADOS##
+    mariadb:
+        container_name: mariadb
+        image: mariadb
+        restart: always
+        env_file:
+            - .env
+        volumes:
+            - db_data:/var/lib/mysql
+
+##SESSÃO DEDICADA AO SERVIDOR WEB"            
+    nginx:
+        container_name: nginx
+        image: nginx:latest
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+#        command: bash -c "openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj '/CN=localhost'"
+        volumes:
+            - ./nginx/conf:/etc/nginx/conf.d
+        depends_on:
+          - mariadb
+
+volumes:
+    db_data:
+    wordpress_data:

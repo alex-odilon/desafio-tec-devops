@@ -1,1 +1,5 @@
 # desafio-tec-devops
+
+O primeiro passo foi identificar as imagens para usar no docker-compose. Após isso, escrever o código tentando utilizar as melhores praticas. No código, utilizar o depends_on para definir a ordem de execução dos containers que dependem uns dos outros. Utilizar volumes para perpetuar os dados. Foi utilizado o arquivo ".env" para a declaração das variaveis, visto que é um arquivo oculto e os dados sensiveis não ficariam expostos no código. Foi validada a conexão do wordpress com a database: docker exec -it mariadb bash > mysql -u wordpress -p > show databases; > show tables in wordpress;
+
+Passos a serem executados: Realizar o direcionamento do wordpress para o nginx > habilitar o https > realizar o redirecionamento do http para https > criar um certificado autoassinado para o nginx.
